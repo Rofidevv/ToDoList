@@ -152,9 +152,9 @@ class UIManager {
     if (this.todoManager.todos.length > 0) {
       this.todoManager.clearAllTodos();
       this.showTodosByFilter();
-      this.showAlertMessage("All todos cleared successfully", "info");
+      this.showAlertMessage("Semua tugas berhasil dihapus", "info");
     } else {
-      this.showAlertMessage("Nothing to clear!", "warning");
+      this.showAlertMessage("Tidak ada tugas yang bisa dihapus!", "warning");
     }
   }
 
