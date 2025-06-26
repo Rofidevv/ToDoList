@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@2.18.0/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css"
+    />
+
+    <link rel="icon" type="image/svg+xml" href="res/favicon.ico" />
+
+    <title>My To-Do List</title>
+  </head>
+  <body>
+    <div class="background-gradient"></div>
+
+    <div class="container p-4 md:p-8">
+      <header class="text-center mb-6">
+        <h1 class="text-3xl md:text-4xl font-bold text-base-content">
+          My To-Do List
+        </h1>
+        <p class="text-base-content/70 mt-1">Kerjakan Tugasmu Tepat Waktu!</p>
+      </header>
+
+      <div class="alert-message mb-4"></div>
+
+      <div class="card bg-base-200/50 shadow-lg mb-6">
+        <div class="card-body p-4 md:p-6">
+          <div
+            class="input-section grid grid-cols-1 md:grid-cols-3 gap-4 items-end"
+          >
+            <div class="w-full md:col-span-2">
+              <label class="label">
+                <span class="label-text font-semibold">Tambah Tugas</span>
+              </label>
+              <input
+                type="text"
+                placeholder="apa yang perlu kamu lakukan?"
+                class="input input-bordered w-full"
+              />
+            </div>
+
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text font-semibold">Tambah Deadline</span>
+              </label>
+              <input
+                type="text"
+                class="input input-bordered w-full schedule-date"
+                placeholder="Tambahkan Deadline"
+              />
+            </div>
+          </div>
+
+          <div class="card-actions justify-end mt-4">
+            <button class="btn btn-primary add-task-button w-full md:w-auto">
+              <i class="bx bx-plus bx-sm"></i> Tambah Tugas
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="todos-filter flex flex-col md:flex-row justify-between items-center gap-4 mb-4"
+      >
+        <div class="tabs tabs-boxed">
+          <a class="tab tab-active" onclick="uiManager.handleFilterTodos('all')"
+            >Semua</a
+          >
+          <a class="tab" onclick="uiManager.handleFilterTodos('pending')"
+            >Belum Selesai</a
+          >
+          <a class="tab" onclick="uiManager.handleFilterTodos('completed')"
+            >Selesai</a
+          >
+        </div>
+        <button class="btn btn-error btn-outline delete-all-btn">
+          <i class="bx bx-trash"></i> Hapus Semua
+        </button>
+      </div>
+
+      <div class="todos-list-container"></div>
+
+      <div id="empty-state" class="text-center py-10 hidden">
+        <h3 class="text-xl font-semibold mt-4">Belum ada tugas!</h3>
+        <p class="text-base-content/60">
+          Tambahkan tugas baru di atas untuk memulai.
+        </p>
+      </div>
+    </div>
+
+    <div id="edit-modal" class="modal">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg">Edit Tugas</h3>
+        <div class="py-4 space-y-4">
+          <input type="hidden" id="edit-todo-id" />
+          <input
+            type="text"
+            id="edit-task-input"
+            class="input input-bordered w-full"
+          />
+          <input
+            type="text"
+            id="edit-date-input"
+            class="input input-bordered w-full"
+            placeholder="Tambahkan Deadline"
+          />
+        </div>
+        <div class="modal-action">
+          <button class="btn btn-ghost" onclick="uiManager.closeEditModal()">
+            Batal
+          </button>
+          <button
+            class="btn btn-primary"
+            onclick="uiManager.handleUpdateTodo()"
+          >
+            Simpan Perubahan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="theme-switcher">
+      <div class="dropdown dropdown-top dropdown-left">
+        <label tabindex="0" class="btn btn-ghost btn-circle m-1">
+          <i class="bx bxs-palette bx-sm"></i>
+        </label>
+        <ul
+          tabindex="0"
+          class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+        >
+          <li class="theme-item" theme="cupcake"><a>cupcake</a></li>
+          <li class="theme-item" theme="dark"><a>dark</a></li>
+          <li class="theme-item" theme="light"><a>light</a></li>
+          <li class="theme-item" theme="bumblebee"><a>bumblebee</a></li>
+          <li class="theme-item" theme="synthwave"><a>synthwave</a></li>
+          <li class="theme-item" theme="halloween"><a>halloween</a></li>
+          <li class="theme-item" theme="fantasy"><a>fantasy</a></li>
+          <li class="theme-item" theme="dracula"><a>dracula</a></li>
+          <li class="theme-item" theme="aqua"><a>aqua</a></li>
+          <li class="theme-item" theme="luxury"><a>luxury</a></li>
+          <li class="theme-item" theme="night"><a>night</a></li>
+        </ul>
+      </div>
+    </div>
+    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
+  </body>
+</html>
